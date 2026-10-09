@@ -33,7 +33,7 @@ LexiDeck is a spaced-repetition flashcard application tailored for IELTS Academi
    ```bash
    python manage.py migrate
    ```
-6. (Optional) Seed the database with the IELTS demo account:
+6. (Optional) Seed the database with the demo account, 5 full decks, and 500 study cards spanning all 5 subject categories (Programming, Language, Academic, Interview, Other):
    ```bash
    python manage.py seed_demo
    ```
