@@ -47,3 +47,18 @@ class Card(models.Model):
 
     def __str__(self):
         return self.front[:40]
+
+
+class ReviewLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="review_logs")
+    card = models.ForeignKey(Card, on_delete=models.SET_NULL, null=True, blank=True, related_name="review_logs")
+    box_before = models.PositiveSmallIntegerField()
+    box_after = models.PositiveSmallIntegerField()
+    is_correct = models.BooleanField()
+    reviewed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-reviewed_at"]
+
+    def __str__(self):
+        return f"{self.user.username} reviewed {self.card_id} at {self.reviewed_at}"

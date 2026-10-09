@@ -78,6 +78,7 @@ class CardViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
             
+        box_before = card.box
         card.box = min(card.box + 1, 5) if correct else 1
         card.next_review_at = timezone.now() + timedelta(days=INTERVALS[card.box])
         card.last_reviewed_at = timezone.now()
@@ -85,6 +86,15 @@ class CardViewSet(viewsets.ModelViewSet):
         if correct:
             card.times_correct += 1
         card.save()
+
+        from .models import ReviewLog
+        ReviewLog.objects.create(
+            user=request.user,
+            card=card,
+            box_before=box_before,
+            box_after=card.box,
+            is_correct=correct
+        )
         
         return Response(self.get_serializer(card).data)
 
