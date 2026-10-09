@@ -42,9 +42,14 @@ LexiDeck is a spaced-repetition flashcard application tailored for IELTS Academi
    python manage.py runserver
    ```
 
-## Demo Account
-- **Username**: `demo_admin`
-- **Password**: `demo1234`
+## Demo & Admin Accounts
+**1. Standard User (Pre-populated with 500 Cards)**
+- **Username**: `demo`
+- **Password**: `demo123`
+
+**2. Admin Superuser (For Django Admin Panel)**
+- **Username**: `admin`
+- **Password**: `admin123`
 
 ## Environment Variables
 

@@ -9,12 +9,20 @@ class Command(BaseCommand):
     help = 'Seeds the database with a demo user, decks, and cards (100 per category).'
 
     def handle(self, *args, **kwargs):
-        # Create demo user as superuser
-        user, created = User.objects.get_or_create(username='demo_admin', email='demo@example.com')
-        user.is_staff = True
-        user.is_superuser = True
+        # Create admin user for admin panel
+        admin, created = User.objects.get_or_create(username='admin', email='admin@example.com')
+        admin.is_staff = True
+        admin.is_superuser = True
         if created:
-            user.set_password('demo1234')
+            admin.set_password('admin123')
+        admin.save()
+
+        # Create demo user as standard user
+        user, created = User.objects.get_or_create(username='demo', email='demo@example.com')
+        user.is_staff = False
+        user.is_superuser = False
+        if created:
+            user.set_password('demo123')
         user.save()
         
         self.stdout.write(self.style.WARNING('Clearing existing decks for demo user...'))

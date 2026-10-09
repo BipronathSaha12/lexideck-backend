@@ -112,7 +112,18 @@ class StatsView(APIView):
         totals = cards.aggregate(r=Sum("times_reviewed"), c=Sum("times_correct"))
         reviewed, correct = totals["r"] or 0, totals["c"] or 0
         
+        from .models import ReviewLog
+        from django.db.models.functions import TruncDate
+        thirty_days_ago = timezone.now() - timedelta(days=30)
+        logs = ReviewLog.objects.filter(user=request.user, reviewed_at__gte=thirty_days_ago)
+        daily_counts = logs.annotate(date=TruncDate('reviewed_at')).values('date').annotate(count=Count('id')).order_by('date')
+        heatmap = {str(item['date']): item['count'] for item in daily_counts}
+        
         return Response({
+            "user": {
+                "username": request.user.username,
+                "email": request.user.email,
+            },
             "decks": Deck.objects.filter(owner=request.user).count(),
             "cards": cards.count(),
             "due_now": cards.filter(next_review_at__lte=timezone.now()).count(),
@@ -120,4 +131,5 @@ class StatsView(APIView):
             "reviewed_today": cards.filter(last_reviewed_at__date=timezone.localdate()).count(),
             "accuracy": round(100 * correct / reviewed) if reviewed else 0,
             "boxes": boxes,
+            "heatmap": heatmap,
         })
