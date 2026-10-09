@@ -1,4 +1,4 @@
-﻿asgiref==3.12.1
+asgiref==3.12.1
 attrs==26.1.0
 dj-database-url==3.1.2
 Django==6.1.2
@@ -19,6 +19,5 @@ sqlparse==0.6.0
 tzdata==2026.5
 uritemplate==4.2.0
 whitenoise==6.12.0
-
 gunicorn==23.0.0
 psycopg2-binary==2.9.10
