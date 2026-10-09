@@ -58,6 +58,11 @@ LexiDeck is a spaced-repetition flashcard application tailored for IELTS Academi
 | `SECRET_KEY` | Django Secret Key | A random insecure key |
 | `DEBUG` | Enable/Disable Debug Mode | `True` |
 
+## Security & Architecture
+- **Global CORS Configured**: The API explicitly permits cross-origin requests from any frontend port (via `CORS_ALLOW_ALL_ORIGINS = True`), avoiding typical Vite dev server port-blocking issues.
+- **Rate Limiting**: Integrated DRF Throttling to protect endpoints (100 reqs/day for anonymous users, 1,000 reqs/day for authenticated users).
+- **Environment Driven**: Fully configured to accept `DATABASE_URL` for seamless production deployment.
+
 ## Spaced Repetition Box Intervals
 
 Cards advance based on the following schedule when answered correctly:
