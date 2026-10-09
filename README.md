@@ -1,6 +1,6 @@
 # LexiDeck: IELTS Academic Vocabulary 
 
-LexiDeck is a spaced-repetition flashcard application tailored for IELTS Academic Vocabulary. This repository contains the Django REST Framework backend API that manages user authentication, decks, cards, and the spaced-repetition study algorithms.
+LexiDeck is a spaced-repetition flashcard application tailored for IELTS Academic Vocabulary. This repository contains the Django REST Framework backend API that manages user authentication, decks, cards, and the spaced-repetition study algorithms, powering a fully mobile-responsive React frontend.
 
 🔗 **Frontend Repository**: [lexideck-frontend](https://github.com/BipronathSaha12/lexideck-frontend)
 
