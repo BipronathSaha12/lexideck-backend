@@ -10,19 +10,19 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Create admin user for admin panel
-        admin, created = User.objects.get_or_create(username='admin', email='admin@example.com')
+        admin, created = User.objects.get_or_create(username='admin')
+        admin.email = 'admin@example.com'
         admin.is_staff = True
         admin.is_superuser = True
-        if created:
-            admin.set_password('admin123')
+        admin.set_password('admin123')
         admin.save()
 
         # Create demo user as standard user
-        user, created = User.objects.get_or_create(username='demo', email='demo@example.com')
+        user, created = User.objects.get_or_create(username='demo')
+        user.email = 'demo@example.com'
         user.is_staff = False
         user.is_superuser = False
-        if created:
-            user.set_password('demo123')
+        user.set_password('demo123')
         user.save()
         
         self.stdout.write(self.style.WARNING('Clearing existing decks for demo user...'))
