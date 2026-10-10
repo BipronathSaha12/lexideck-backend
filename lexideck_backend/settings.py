@@ -28,10 +28,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-%qt_3_54(ae)t!hax2ox7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost').split(',')
-render_external_hostname = config('RENDER_EXTERNAL_HOSTNAME', default=None)
-if render_external_hostname:
-    ALLOWED_HOSTS.append(render_external_hostname)
+ALLOWED_HOSTS = ['*']
 
 
 
