@@ -54,6 +54,36 @@ class DeckViewSet(viewsets.ModelViewSet):
             "cards": serializer.data
         })
 
+    @action(detail=True, methods=["post"])
+    def import_csv(self, request, pk=None):
+        import csv
+        import io
+        deck = self.get_object()
+        file = request.FILES.get("file")
+        if not file:
+            return Response({"error": "No file uploaded"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            decoded_file = file.read().decode("utf-8")
+            io_string = io.StringIO(decoded_file)
+            reader = csv.reader(io_string)
+            
+            cards_to_create = []
+            for row in reader:
+                if len(row) >= 2:
+                    front = row[0].strip()
+                    back = row[1].strip()
+                    if front.lower() == 'front' and back.lower() == 'back':
+                        continue
+                        
+                    hint = row[2].strip() if len(row) > 2 else ""
+                    if front and back:
+                        cards_to_create.append(Card(deck=deck, front=front, back=back, hint=hint))
+            
+            Card.objects.bulk_create(cards_to_create)
+            return Response({"imported": len(cards_to_create)}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class CardViewSet(viewsets.ModelViewSet):
     serializer_class = CardSerializer
