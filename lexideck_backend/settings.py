@@ -29,6 +29,10 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-%qt_3_54(ae)t!hax2ox7
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost').split(',')
+render_external_hostname = config('RENDER_EXTERNAL_HOSTNAME', default=None)
+if render_external_hostname:
+    ALLOWED_HOSTS.append(render_external_hostname)
+
 
 
 # Application definition
@@ -145,6 +149,12 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+frontend_url = config('FRONTEND_URL', default=None)
+if frontend_url:
+    CSRF_TRUSTED_ORIGINS = [frontend_url]
+    CORS_ALLOWED_ORIGINS = [frontend_url]
+
 
 
 # Static files (CSS, JavaScript, Images)
