@@ -87,6 +87,7 @@ Cards advance based on the following schedule when answered correctly:
 | `/api/decks/` | GET/POST | JWT User | List/Create decks (owner scoped) |
 | `/api/decks/<id>/` | GET/PUT/PATCH/DELETE | JWT User | Retrieve/Update/Delete deck |
 | `/api/decks/<id>/study/` | GET | JWT User | Fetch up to 20 due cards |
+| `/api/decks/<id>/import_csv/` | POST | JWT User | Bulk import cards from a CSV file |
 | `/api/cards/` | GET/POST | JWT User | List/Create cards (owner scoped via deck) |
 | `/api/cards/<id>/` | GET/PUT/PATCH/DELETE | JWT User | Retrieve/Update/Delete card |
 | `/api/cards/<id>/review/` | POST | JWT User | Submit answer (`{"correct": true}`) |
