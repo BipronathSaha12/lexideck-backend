@@ -145,12 +145,15 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
-
 frontend_url = config('FRONTEND_URL', default=None)
 if frontend_url:
     CSRF_TRUSTED_ORIGINS = [frontend_url]
     CORS_ALLOWED_ORIGINS = [frontend_url]
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOW_ALL_ORIGINS = not bool(frontend_url)
 
 
 

@@ -80,7 +80,9 @@ class DeckViewSet(viewsets.ModelViewSet):
                     if front and back:
                         cards_to_create.append(Card(deck=deck, front=front, back=back, hint=hint))
             
-            Card.objects.bulk_create(cards_to_create)
+            from django.db import transaction
+            with transaction.atomic():
+                Card.objects.bulk_create(cards_to_create)
             return Response({"imported": len(cards_to_create)}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

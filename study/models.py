@@ -35,7 +35,7 @@ class Card(models.Model):
     back = models.TextField()
     hint = models.CharField(max_length=200, blank=True)
     box = models.PositiveSmallIntegerField(default=1)
-    next_review_at = models.DateTimeField(default=timezone.now)
+    next_review_at = models.DateTimeField(default=timezone.now, db_index=True)
     last_reviewed_at = models.DateTimeField(null=True, blank=True)
     times_reviewed = models.PositiveIntegerField(default=0)
     times_correct = models.PositiveIntegerField(default=0)
@@ -44,6 +44,10 @@ class Card(models.Model):
 
     class Meta:
         ordering = ["box", "next_review_at"]
+        indexes = [
+            models.Index(fields=["deck", "box"]),
+            models.Index(fields=["deck", "next_review_at"]),
+        ]
 
     def __str__(self):
         return self.front[:40]
